@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-
+/* @import "tw-animate-css"; */
+/* 
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -50,7 +50,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .animate-spin {
   animation: spin 1s linear infinite;
