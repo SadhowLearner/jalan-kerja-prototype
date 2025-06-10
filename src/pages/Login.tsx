@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LoginRequest } from "@/lib/axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -35,6 +35,8 @@ export default function Login() {
     });
 
     if (res.status == 200) navigate("/");
+    if (res.status !== 200) setIsError("Error");
+
     setIsLoading(false);
   };
 
