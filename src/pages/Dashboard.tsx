@@ -1,9 +1,7 @@
-import DashboardLayout from "@/layout/DashboardLayout";
+// import DashboardLayout from "@/layout/DashboardLayout";
 
 export default function Dashboard() {
   return (
-    <DashboardLayout>
       <div className="">Dashboard</div>
-    </DashboardLayout>
   );
 }

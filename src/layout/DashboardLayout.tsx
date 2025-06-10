@@ -2,12 +2,13 @@ import { AppSidebar } from "@/components/ui/app-sidebar";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { LogOut } from "lucide-react";
+import { Outlet } from "react-router-dom";
 
-interface LayoutInterface {
-  children: React.ReactNode;
-}
+// interface LayoutInterface {
+//   children: React.ReactNode;
+// }
 
-export default function DashboardLayout({ children }: LayoutInterface) {
+export default function DashboardLayout() {
   const handleLogout = () => {};
   return (
     <div className="bg-white min-h-screen">
@@ -25,7 +26,7 @@ export default function DashboardLayout({ children }: LayoutInterface) {
               </Button>
             </div>
             {/* Content */}
-            <div className="">{children}</div>
+            <Outlet/>
           </div>
         </main>
       </SidebarProvider>
