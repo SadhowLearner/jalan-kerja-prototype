@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
 
 interface User {
   email: string;
@@ -23,9 +24,11 @@ export default function App() {
 
     // Demo credentials - tambahkan lebih banyak user
     const validUsers = [
+      //TODO: API user list
       { email: "admin@example.com", password: "admin123", name: "Admin User" },
       { email: "edu@gmail.com", password: "admin123", name: "Edu User" },
       { email: "user@test.com", password: "password", name: "Test User" },
+      { email: "edu@gmail.com", password: "tes123", name: "Test User" },
     ];
 
     const user = validUsers.find(
@@ -48,11 +51,51 @@ export default function App() {
 
   return (
     <div className="App">
-      {user ? (
-        <Dashboard onLogout={handleLogout} />
-      ) : (
-        <Login onLogin={handleLogin} error={loginError} isLoading={isLoading} />
-      )}
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Login
+                  onLogin={handleLogin}
+                  error={loginError}
+                  isLoading={isLoading}
+                />
+              )
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              user ? (
+                <Dashboard onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          {/* Redirect root to login or dashboard */}
+          <Route
+            path="/"
+            element={
+              user ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/squad"
+            element={
+                <Navigate to="/squad" replace />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

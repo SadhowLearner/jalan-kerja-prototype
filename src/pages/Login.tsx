@@ -86,7 +86,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
             )}
             <Button
               type="submit"
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+              className="w-full h-12 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -99,7 +99,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
               )}
             </Button>
           </form>
-          <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+          {/* <div className="mt-8 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm font-medium text-gray-700 mb-2">
               Demo Accounts:
             </p>
@@ -114,7 +114,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
                 <strong>Test:</strong> user@test.com / password
               </p>
             </div>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>

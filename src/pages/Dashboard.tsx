@@ -4,25 +4,28 @@ import type React from "react";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import {
+//   Card,
+//   CardContent,
+//   CardDescription,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash2, Plus, LogOut } from "lucide-react";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/ui/app-sidebar";
+import { Outlet } from "react-router-dom";
 
 interface Squad {
   id: number;
@@ -62,7 +65,7 @@ const initialSquads: Squad[] = [
   },
 ];
 
-export default function Dashboard({ onLogout }: DashboardProps) {
+export default function Dashboard({ onLogout, children }: DashboardProps) {
   const [squads, setSquads] = useState<Squad[]>(initialSquads);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSquad, setEditingSquad] = useState<Squad | null>(null);
@@ -125,195 +128,25 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Squad Management</h1>
-          <Button onClick={onLogout} variant="default">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
-        </div>
-
-        {/* Form Card */}
-        <Card>
-          <CardHeader>
+    <div className="min-h-full overflow-hidden bg-gray-50 p-4">
+      <SidebarProvider>
+        <AppSidebar />
+        <main className="w-full">
+          <SidebarTrigger />
+          <div className="max-w-6xl mx-auto space-y-6">
+            {/* Header */}
             <div className="flex justify-between items-center">
-              <div>
-                <CardTitle>
-                  {isFormOpen
-                    ? editingSquad
-                      ? "Edit Squad Member"
-                      : "Add New Squad Member"
-                    : "Squad Form"}
-                </CardTitle>
-                <CardDescription>
-                  {isFormOpen
-                    ? "Fill in the details below"
-                    : "Click the button to add a new squad member"}
-                </CardDescription>
-              </div>
-              {!isFormOpen && (
-                <Button onClick={() => setIsFormOpen(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Member
-                </Button>
-              )}
+              <h1 className="text-3xl font-bold">Squad Management</h1>
+              <Button onClick={onLogout} variant="default">
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
             </div>
-          </CardHeader>
-          {isFormOpen && (
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="Enter player name"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="position">Position</Label>
-                    <Input
-                      id="position"
-                      value={formData.position}
-                      onChange={(e) =>
-                        setFormData({ ...formData, position: e.target.value })
-                      }
-                      placeholder="e.g., Forward, Midfielder"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="age">Age</Label>
-                    <Input
-                      id="age"
-                      type="number"
-                      value={formData.age}
-                      onChange={(e) =>
-                        setFormData({ ...formData, age: e.target.value })
-                      }
-                      placeholder="Enter age"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="status">Status</Label>
-                    <select
-                      id="status"
-                      value={formData.status}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          status: e.target.value as "active" | "inactive",
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button type="submit">
-                    {editingSquad ? "Update" : "Add"} Member
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="default"
-                    onClick={handleCancel}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* Table Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Squad Members</CardTitle>
-            <CardDescription>Manage your squad members here</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-gray-900 font-semibold">
-                    Name
-                  </TableHead>
-                  <TableHead className="text-gray-900 font-semibold">
-                    Position
-                  </TableHead>
-                  <TableHead className="text-gray-900 font-semibold">
-                    Age
-                  </TableHead>
-                  <TableHead className="text-gray-900 font-semibold">
-                    Status
-                  </TableHead>
-                  <TableHead className="text-gray-900 font-semibold">
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {squads.map((squad) => (
-                  <TableRow key={squad.id}>
-                    <TableCell className="font-medium text-gray-900">
-                      {squad.name}
-                    </TableCell>
-                    <TableCell className="text-gray-700">
-                      {squad.position}
-                    </TableCell>
-                    <TableCell className="text-gray-700">{squad.age}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={
-                          squad.status === "active" ? "default" : "secondary"
-                        }
-                        className={
-                          squad.status === "active"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }
-                      >
-                        {squad.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="default"
-                          onClick={() => handleEdit(squad)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="default"
-                          onClick={() => handleDelete(squad.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </div>
+            {/* Konten halaman dashboard (children) */}
+            <Outlet />
+          </div>
+        </main>
+      </SidebarProvider>
     </div>
   );
 }
