@@ -51,51 +51,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              user ? (
-                <Navigate to="/dashboard" replace />
-              ) : (
-                <Login
-                  onLogin={handleLogin}
-                  error={loginError}
-                  isLoading={isLoading}
-                />
-              )
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              user ? (
-                <Dashboard onLogout={handleLogout} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          {/* Redirect root to login or dashboard */}
-          <Route
-            path="/"
-            element={
-              user ? (
-                <Navigate to="/dashboard" replace />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route
-            path="/squad"
-            element={
-                <Navigate to="/squad" replace />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <div className="">This is App</div>
     </div>
   );
 }

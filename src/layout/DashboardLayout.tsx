@@ -1,0 +1,34 @@
+import { AppSidebar } from "@/components/ui/app-sidebar";
+import { Button } from "@/components/ui/button";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { LogOut } from "lucide-react";
+
+interface LayoutInterface {
+  children: React.ReactNode;
+}
+
+export default function DashboardLayout({ children }: LayoutInterface) {
+  const handleLogout = () => {};
+  return (
+    <div className="bg-white min-h-screen">
+      <SidebarProvider>
+        <AppSidebar />
+        <main className="w-full">
+          <SidebarTrigger />
+          <div className="max-w-6xl mx-auto space-y-6">
+            {/* Header */}
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold">Squad Management</h1>
+              <Button onClick={handleLogout} variant="default">
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </div>
+            {/* Content */}
+            <div className="">{children}</div>
+          </div>
+        </main>
+      </SidebarProvider>
+    </div>
+  );
+}

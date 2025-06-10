@@ -1,7 +1,3 @@
-"use client";
-
-import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,20 +10,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { LoginRequest } from "@/lib/axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
-interface LoginProps {
-  onLogin: (email: string, password: string) => void;
-  error?: string;
-  isLoading?: boolean;
-}
-
-export default function Login({ onLogin, error, isLoading }: LoginProps) {
+export default function Login() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setIsError] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onLogin(email, password);
+    const formData = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
+
+    const email = payload.email as string;
+    const password = payload.password as string;
+
+    setIsLoading(true);
+    const res = await LoginRequest("login", {
+      email,
+      password,
+    });
+
+    if (res.status == 200) navigate("/");
+    setIsLoading(false);
   };
 
   return (
@@ -52,6 +60,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
               </Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="Enter your email"
                 value={email}
@@ -68,6 +77,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
                 Password
               </Label>
               <Input
+                name="password"
                 id="password"
                 type="password"
                 placeholder="Enter your password"
@@ -99,7 +109,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
               )}
             </Button>
           </form>
-          {/* <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+          <div className="mt-8 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm font-medium text-gray-700 mb-2">
               Demo Accounts:
             </p>
@@ -114,7 +124,7 @@ export default function Login({ onLogin, error, isLoading }: LoginProps) {
                 <strong>Test:</strong> user@test.com / password
               </p>
             </div>
-          </div> */}
+          </div>
         </CardContent>
       </Card>
     </div>

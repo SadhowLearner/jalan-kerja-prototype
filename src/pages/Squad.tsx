@@ -1,9 +1,9 @@
 import DashboardLayout from "@/layout/DashboardLayout";
 
-export default function Dashboard() {
+export default function SquadPage() {
   return (
     <DashboardLayout>
-      <div className="">Dashboard</div>
+      <div className="">Squad</div>
     </DashboardLayout>
   );
 }
