@@ -1,7 +1,6 @@
 import DashboardLayout from "@/layout/DashboardLayout";
 import { GetRequest, PostRequest } from "@/lib/axios";
 import { useEffect, useState } from "react";
-
 import {
   Table,
   TableBody,
@@ -94,10 +93,8 @@ export default function SquadPage() {
       if (res.status === 201) {
         setSuccess("Squad created successfully");
 
-        // Reset form and selected users
         resetForm(e.target as HTMLFormElement);
 
-        // Auto-update the squads list
         await getSquads();
 
         setTimeout(() => {

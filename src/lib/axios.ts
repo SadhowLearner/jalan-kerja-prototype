@@ -46,3 +46,12 @@ export const LoginRequest = async (
     return error.response ?? error;
   }
 };
+
+export const LogoutRequest = async () => {
+  try {
+    sessionStorage.removeItem("token");
+    return true;
+  } catch (error) {
+    return error;
+  }
+};
