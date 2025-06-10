@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { LogoutRequest } from "@/lib/axios";
 import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+// 
+// interface LayoutInterface {
+//   children: React.ReactNode;
+// }
 
-interface LayoutInterface {
-  children: React.ReactNode;
-}
-
-export default function DashboardLayout({ children }: LayoutInterface) {
+export default function DashboardLayout() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     const isSuccess = LogoutRequest();
@@ -42,10 +42,11 @@ export default function DashboardLayout({ children }: LayoutInterface) {
               />
             </div>
             {/* Content */}
-            <Outlet/>
+           <Outlet/>
           </div>
         </main>
       </SidebarProvider>
     </div>
   );
+
 }

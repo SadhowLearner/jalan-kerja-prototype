@@ -109,7 +109,7 @@ export default function SquadPage() {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <div className="mt-12 ">
         <div className="flex w-full justify-end">
           <FormModal>
@@ -218,6 +218,6 @@ export default function SquadPage() {
           </TableBody>
         </Table>
       </div>
-    </DashboardLayout>
+    </>
   );
 }
